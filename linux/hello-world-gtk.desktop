@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Hello World
+Comment=Hello World GTK
+Exec=hello-world-gtk
+Terminal=false
+Type=Application
+Icon=hello-world-gtk
+Categories=GNOME;GTK;Utility;
+StartupNotify=false
