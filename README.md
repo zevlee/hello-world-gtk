@@ -15,7 +15,7 @@ Presently, GTK3 is supported. The repo will be updated to support GTK4 once ther
 3. Go to your folder for MSYS2 and run ``mingw32.exe``. The following commands will be executed in the console that appears.
 4. Enter the ``windows`` directory of the extracted repository.
 ```
-cd passphraser/windows
+cd hello-world-gtk/windows
 ```
 5. Run ``bootstrap.sh`` to install any missing dependencies.
 ```
@@ -30,11 +30,11 @@ chmod +x build.sh && ./build.sh
 1. Brew is needed to install PyGObject. [Get it from the brew website.](https://brew.sh)
 2. Clone this repository.
 ```
-git clone https://github.com/zevlee/passphraser.git
+git clone https://github.com/zevlee/hello-world-gtk.git
 ```
 3. Enter the ``macos`` directory.
 ```
-cd passphraser/macos
+cd hello-world-gtk/macos
 ```
 4. Run ``bootstrap.sh`` to install any missing dependencies.
 ```
@@ -49,11 +49,11 @@ chmod +x build.sh && ./build.sh
 1. Ensure PyGObject is installed.
 2. Clone this repository
 ```
-git clone https://github.com/zevlee/passphraser.git
+git clone https://github.com/zevlee/hello-world-gtk.git
 ```
 3. Enter the ``linux`` directory
 ```
-cd passphraser/linux
+cd hello-world-gtk/linux
 ```
 4. Run ``bootstrap.sh`` to install pyinstaller via pip if you haven't already.
 ```
