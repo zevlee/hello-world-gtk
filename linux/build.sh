@@ -14,7 +14,7 @@ chmod +x appimagetool-$(uname -m).AppImage
 
 echo "Running appimagetool..."
 
-./appimagetool*AppImage dist/$app
+ARCH=$(uname -m) ./appimagetool*AppImage dist/$app
 
 rm appimagetool-$(uname -m).AppImage
 
