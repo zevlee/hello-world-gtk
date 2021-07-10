@@ -8,13 +8,11 @@ pacman -Sy --noconfirm mingw-w64-i686-python3-pip
 pip install pyinstaller
 
 mkdir zipdll
-cd zipdll
 wget https://nsis.sourceforge.io/mediawiki/images/d/d9/ZipDLL.zip
-unzip ZipDLL.zip
-cp ZipDLL.dll /mingw32/share/nsis/Plugins/ansi
-cp ZipDLL.dll /mingw32/share/nsis/Plugins/unicode
-cp zipdll.nsh /mingw32/share/nsis/Include/ZipDLL.nsh
-cd ..
-rm -r zipdll
+unzip ZipDLL.zip -d zipdll
+cp zipdll/ZipDLL.dll /mingw32/share/nsis/Plugins/ansi
+cp zipdll/ZipDLL.dll /mingw32/share/nsis/Plugins/unicode
+cp zipdll/zipdll.nsh /mingw32/share/nsis/Include/ZipDLL.nsh
+rm -r zipdll ZipDLL.zip
 
 echo "Done"
