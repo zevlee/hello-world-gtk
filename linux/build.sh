@@ -1,7 +1,7 @@
 #!/bin/sh
 
 app=hello-world-gtk
-version=0.1.0
+version=0.1.1
 
 echo "Running pyinstaller..."
 

@@ -7,7 +7,7 @@
 
 !define MAJOR 0
 !define MINOR 1
-!define MICRO 0
+!define MICRO 1
 
 !define INSTALLSIZE 105572
 
