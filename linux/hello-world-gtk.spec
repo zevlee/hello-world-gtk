@@ -11,6 +11,7 @@ a = Analysis(
 		('../lib/application.py', 'lib'),
 		('../hello-world-gtk.svg', '.'),
 		('../LICENSE', '.'),
+		('../VERSION', '.'),
 		('hello-world-gtk.desktop', '.'),
 		('.DirIcon', '.')
   ],

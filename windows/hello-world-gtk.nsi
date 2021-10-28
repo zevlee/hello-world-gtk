@@ -5,9 +5,7 @@
 !define AUTHOR "Author Name"
 !define DESCRIPTION "Hello World GTK"
 
-!define MAJOR 0
-!define MINOR 1
-!define MICRO 1
+!define /file VERSION "..\VERSION"
 
 !define INSTALLSIZE 105572
 
@@ -15,7 +13,7 @@ InstallDir "$PROGRAMFILES\${APPNAME}"
 
 Name "${APPNAME}"
 Icon "${FILENAME}.ico"
-outFile "${FILENAME}-${MAJOR}.${MINOR}.${MICRO}.exe"
+outFile "${FILENAME}-${VERSION}.exe"
 
 !include LogicLib.nsh
 
@@ -60,10 +58,7 @@ section "install"
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "InstallLocation" "$\"$INSTDIR$\""
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayIcon" "$\"$INSTDIR\${FILENAME}.ico$\""
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "Publisher" "$\"${AUTHOR}$\""
-	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayVersion" "$\"${MAJOR}.${MINOR}.${MICRO}$\""
-	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "VersionMajor" ${MAJOR}
-	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "VersionMinor" ${MINOR}
-	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "VersionMicro" ${MICRO}
+	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayVersion" "$\"Version ${VERSION}$\""
 	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "NoModify" 1
 	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "NoRepair" 1
 	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "EstimatedSize" ${INSTALLSIZE}

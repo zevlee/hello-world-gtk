@@ -2,7 +2,7 @@
 
 app=hello-world-gtk
 name="Hello World"
-version=0.1.1
+version=$(cat ../VERSION)
 
 echo "Running pyinstaller..."
 

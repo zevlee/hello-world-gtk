@@ -10,7 +10,8 @@ a = Analysis(
 		('../lib/__init__.py', 'lib'),
 		('../lib/application.py', 'lib'),
 		('../hello-world-gtk.svg', '.'),
-		('../LICENSE', '.')
+		('../LICENSE', '.'),
+		('../VERSION', '.')
   ],
   hiddenimports=[],
   hookspath=[],
@@ -34,7 +35,7 @@ exe = EXE(
 	[],
 	exclude_binaries=True,
 	name='hello-world-gtk',
-  icon='hello-world-gtk.icns',
+	icon='hello-world-gtk.icns',
 	debug=False,
 	bootloader_ignore_signals=False,
 	strip=False,
