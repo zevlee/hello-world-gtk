@@ -16,6 +16,7 @@ mkdir Resources
 cp "$app.icns" Resources
 mv Resources Contents
 cp Info.plist Contents
+sed -i '' 's/>VERSION</>'"$version"'</g' Contents/Info.plist
 mkdir "$name.app"
 mv Contents "$name.app"
 
