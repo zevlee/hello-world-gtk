@@ -53,3 +53,11 @@ coll = COLLECT(
 	upx_exclude=[],
 	name='hello-world-gtk'
 )
+
+app = BUNDLE(
+	coll,
+	name='Hello World.app',
+	icon='hello-world-gtk.icns',
+	bundle_identifier='org.example.HelloWorldGTK',
+	version='VERSION'
+)
