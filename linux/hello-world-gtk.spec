@@ -12,8 +12,7 @@ a = Analysis(
 		('../hello-world-gtk.svg', '.'),
 		('../LICENSE', '.'),
 		('../VERSION', '.'),
-		('hello-world-gtk.desktop', '.'),
-		('.DirIcon', '.')
+		('hello-world-gtk.desktop', '.')
   ],
   hiddenimports=[],
   hookspath=[],
