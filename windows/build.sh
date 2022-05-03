@@ -9,7 +9,7 @@ echo "Running pyinstaller..."
 python3 -OO -m PyInstaller $app.spec
 
 if test ! -f dist/$app/gdbus.exe; then
-  cp C:/msys64/mingw32/bin/gdbus.exe dist/$app
+    cp C:/msys64/mingw32/bin/gdbus.exe dist/$app
 fi
 
 cd dist/$app
@@ -22,7 +22,7 @@ echo "Running makensis..."
 makensis $app.nsi
 
 for exe in $app*.exe; do
-  echo $(sha256sum $exe) > $exe.sha256
+    echo $(sha256sum $exe) > $exe.sha256
 done
 
 echo "Cleaning up..."
