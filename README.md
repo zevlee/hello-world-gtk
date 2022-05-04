@@ -7,7 +7,7 @@ This repository is an easily configurable build system for distributing Python-b
 
 The releases section contains the result of using this repo as-is.
 
-Presently, GTK3 is supported. The repo will be updated to support GTK4 once there is better support for Windows and macOS. 
+Presently, GTK3 is supported. The repo will be updated to support GTK4 once there is better support for Windows and macOS.
 
 ### Building on Windows
 1. MSYS2 is needed to build on Windows. [Get it from the MSYS2 website.](https://www.msys2.org/)
@@ -67,7 +67,7 @@ git clone https://github.com/zevlee/hello-world-gtk.git
 ```
 cd hello-world-gtk/linux
 ```
-4. Run ``bootstrap.sh`` to install pyinstaller via pip if you haven't already.
+4. Run ``bootstrap.sh`` to install any missing dependencies.
 ```
 chmod +x bootstrap.sh && ./bootstrap.sh
 ```
