@@ -40,7 +40,9 @@ exe = EXE(
 	bootloader_ignore_signals=False,
 	strip=False,
 	upx=True,
-	console=False
+	console=False,
+	codesign_identity='',
+	entitlements_file='entitlements.plist'
 )
 
 coll = COLLECT(
