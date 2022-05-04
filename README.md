@@ -27,7 +27,7 @@ chmod +x build.sh && ./build.sh
 ```
 
 ### Building on macOS
-1. Brew is needed to install PyGObject. [Get it from the brew website.](https://brew.sh)
+1. Homebrew is needed to install PyGObject. [Get it from the Homebrew website.](https://brew.sh)
 2. Clone this repository.
 ```
 git clone https://github.com/zevlee/hello-world-gtk.git
@@ -43,6 +43,18 @@ chmod +x bootstrap.sh && ./bootstrap.sh
 5. Run ``build.sh``.
 ```
 chmod +x build.sh && ./build.sh
+```
+Enable code signing by adding the Common Name of the certificate as the first argument. Without this, adhoc signing will be used.
+```
+./build.sh "Developer ID Application: Organization Name (TEAMIDHERE)"
+```
+Enable notarization by also adding the name of a stored keychain profile.
+```
+./build.sh "Developer ID Application: Organization Name (TEAMIDHERE)" "keychain-profile"
+```
+Notarization can alternatively be enabled by adding Apple ID, Team ID, and an app-specific password as subsequent arguments.
+```
+./build.sh "Developer ID Application: Organization Name (TEAMIDHERE)" "developer@example.com" "TEAMIDHERE" "pass-word-goes-here"
 ```
 
 ### Building on Linux
