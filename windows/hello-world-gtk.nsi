@@ -35,7 +35,7 @@ function .onInit
 	!insertmacro VerifyUserIsAdmin
 functionEnd
 
-!include ZipDLL.nsh
+!include zipdll.nsh
 
 section "install"
 
