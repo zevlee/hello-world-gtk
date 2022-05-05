@@ -1,31 +1,31 @@
 #!/bin/sh
 
-app=hello-world-gtk
+APP=hello-world-gtk
 
 version=$(cat ../VERSION)
 
 echo "Running pyinstaller..."
 
-python3 -OO -m PyInstaller $app.spec --noconfirm
+python3 -OO -m PyInstaller $APP.spec --noconfirm
 
-mv dist/$app/$app dist/$app/AppRun
-sed -i "s/X-AppImage-Version=VERSION/X-AppImage-Version="$version"/g" dist/$app/$app.desktop
+mv dist/$APP/$APP dist/$APP/AppRun
+sed -i "s/X-AppImage-Version=VERSION/X-AppImage-Version="$version"/g" dist/$APP/$APP.desktop
 
 wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-$(uname -m).AppImage
 chmod +x appimagetool-$(uname -m).AppImage
 
 echo "Running appimagetool..."
 
-ARCH=$(uname -m) ./appimagetool*AppImage dist/$app
+ARCH=$(uname -m) ./appimagetool*AppImage dist/$APP
 
 rm appimagetool-$(uname -m).AppImage
 
-mv *.AppImage $app-$version-$(uname -m).AppImage
+mv *.AppImage $APP-$version-$(uname -m).AppImage
 
-echo $(sha256sum $app-$version-$(uname -m).AppImage) > $app-$version-$(uname -m).AppImage.sha256
+echo $(sha256sum $APP-$version-$(uname -m).AppImage) > $APP-$version-$(uname -m).AppImage.sha256
 
 echo "Cleaning up..."
 
 rm -r build dist
 
-mv $app-$version-$(uname -m).AppImage* ../..
+mv $APP-$version-$(uname -m).AppImage* ../..
