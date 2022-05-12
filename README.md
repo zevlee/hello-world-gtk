@@ -11,17 +11,24 @@ Presently, GTK3 is supported. The repo will be updated to support GTK4 once ther
 
 ### Building on Windows
 1. MSYS2 is needed to build on Windows. [Get it from the MSYS2 website.](https://www.msys2.org/)
-2. Download a copy of this repository, then extract it to your home folder for MSYS2 (Usually ``C:\msys64\home\<user>``).
-3. Go to your folder for MSYS2 and run ``mingw32.exe``. The following commands will be executed in the console that appears.
-4. Enter the ``windows`` directory of the extracted repository.
+2. Go to your folder for MSYS2 and run ``mingw32.exe``. The following commands will be executed in the console that appears.
+3. Install git.
 ```
-cd hello-world-gtk/windows
+pacman -S git
 ```
-5. Run ``bootstrap.sh`` to install any missing dependencies.
+4. Clone this repository.
+```
+git clone https://github.com/zevlee/hello-world-gtk.git
+```
+5. Enter the ``windows`` directory.
+```
+cd passphraser/windows
+```
+6. Run ``bootstrap.sh`` to install any missing dependencies.
 ```
 chmod +x bootstrap.sh && ./bootstrap.sh
 ```
-6. Run ``build.sh``.
+7. Run ``build.sh``.
 ```
 chmod +x build.sh && ./build.sh
 ```
