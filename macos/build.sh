@@ -3,20 +3,25 @@
 APP=hello-world-gtk
 NAME="Hello World"
 
+echo "Setting up virtual environment..."
+
+/usr/local/bin/python3 -m venv --system-site-packages venv
+. venv/bin/activate
+python3 -m pip install --upgrade pip
+python3 -m pip install -r ../requirements.txt
+
 echo "Preparing app..."
 
 version=$(cat ../VERSION)
-
 cp "$APP.spec" "$APP@.spec"
 sed -i '' "s/'VERSION'/'$version'/g" "$APP@.spec"
-
 if [ ! -z "$1" ]; then
     sed -i '' "s/codesign_identity=''/codesign_identity='$1'/g" "$APP@.spec"
 fi
 
 echo "Running pyinstaller..."
 
-/usr/local/bin/python3 -OO -m PyInstaller "$APP@.spec" --noconfirm
+python3 -OO -m PyInstaller "$APP@.spec" --noconfirm
 
 if [ ! -z "$2" ]; then
     echo "Notarizing app..."
@@ -34,20 +39,15 @@ fi
 echo "Building dmg..."
 
 hdiutil create -size $(($(du -sk "dist/$NAME.app"/ | awk '{print $1}')*175/100))k -fs HFS+ -volname "$NAME" -o "$APP.dmg"
-
 dir="$(echo $(hdiutil attach $APP.dmg | cut -f 3) | cut -f 1)"
-
 mv "dist/$NAME.app" "$dir"
 ln -s /Applications "$dir"
-
 hdiutil detach "$dir"
-
 hdiutil convert "$APP.dmg" -format UDZO -o "$APP-$version.dmg"
-
 echo $(shasum -a 256 "$APP-$version.dmg") > "$APP-$version.dmg.sha256"
 
 echo "Cleaning up..."
 
-rm -r build dist "$APP.dmg" "$APP@.spec"
-
+deactivate
+rm -r build dist "$APP.dmg" "$APP@.spec" venv
 mv "$APP-$version.dmg"* ../..
