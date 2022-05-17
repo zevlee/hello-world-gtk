@@ -27,7 +27,7 @@ git clone https://github.com/zevlee/hello-world-gtk.git
 ```
 5. Enter the ``windows`` directory.
 ```
-cd passphraser/windows
+cd hello-world-gtk/windows
 ```
 6. Run ``bootstrap.sh`` to install any missing dependencies.
 ```
