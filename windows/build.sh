@@ -17,9 +17,6 @@ python3 -OO -m PyInstaller $APP.spec
 
 echo "Preparing app..."
 
-if test ! -f dist/$APP/gdbus.exe; then
-    cp C:/msys64/mingw32/bin/gdbus.exe dist/$APP
-fi
 cd dist/$APP
 zip -r $APP.zip *
 mv $APP.zip ../..
