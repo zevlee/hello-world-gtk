@@ -7,12 +7,7 @@ This repository is an easily configurable build system for distributing Python-b
 
 The releases section contains the result of using this repo as-is.
 
-### Compatibility
-|         | GTK3 | GTK4 |
-| :--     | :-:  | :-:  |
-| Windows | ✔️    |      |
-| macOS   | ✔️    |      |
-| Linux   | ✔️    | ✔️    |
+GTK3 and GTK4 are fully supported.
 
 ### Building on Windows
 1. MSYS2 is needed to build on Windows. [Get it from the MSYS2 website.](https://www.msys2.org/)
