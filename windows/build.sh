@@ -21,6 +21,7 @@ cd dist/$APP
 zip -r $APP.zip *
 mv $APP.zip ../..
 cd ../..
+echo $(du -sk dist/$APP | cut -f 1) > INSTALLSIZE
 
 echo "Running makensis..."
 
@@ -34,6 +35,7 @@ echo "Cleaning up..."
 deactivate
 mv $APP*.exe* ../..
 rm $APP.zip
+rm INSTALLSIZE
 rm -r build
 rm -r dist/*/*
 rm -r dist
