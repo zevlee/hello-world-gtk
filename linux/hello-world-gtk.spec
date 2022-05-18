@@ -13,15 +13,15 @@ a = Analysis(
 		('../LICENSE', '.'),
 		('../VERSION', '.'),
 		('hello-world-gtk.desktop', '.')
-  ],
-  hiddenimports=[],
-  hookspath=[],
-  runtime_hooks=[],
-  excludes=[],
-  win_no_prefer_redirects=False,
-  win_private_assemblies=False,
-  cipher=block_cipher,
-  noarchive=False
+	],
+	hiddenimports=[],
+	hookspath=[],
+	runtime_hooks=[],
+	excludes=[],
+	win_no_prefer_redirects=False,
+	win_private_assemblies=False,
+	cipher=block_cipher,
+	noarchive=False
 )
 
 pyz = PYZ(
