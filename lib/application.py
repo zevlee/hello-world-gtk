@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
 from gi import require_version
-require_version("Gtk", "3.0")
-from gi.repository import Gtk
+require_version("Gtk", "4.0")
+require_version("Adw", "1")
+from gi.repository import Gtk, Adw
 
 
 class AppWindow(Gtk.ApplicationWindow):
@@ -12,7 +13,7 @@ class AppWindow(Gtk.ApplicationWindow):
         self.set_title("Hello World")
 
 
-class Application(Gtk.Application):
+class Application(Adw.Application):
 
     def __init__(self):
         super().__init__()

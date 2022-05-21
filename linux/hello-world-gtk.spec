@@ -14,6 +14,13 @@ a = Analysis(
 		('../VERSION', '.'),
 		('hello-world-gtk.desktop', '.')
 	],
+	hooksconfig={
+		"gi": {
+			"module-versions": {
+				"Gtk": "4.0"
+			}
+		}
+	},
 	hiddenimports=[],
 	hookspath=[],
 	runtime_hooks=[],
