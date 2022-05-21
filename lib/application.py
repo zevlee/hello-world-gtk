@@ -8,14 +8,14 @@ from gi.repository import Gtk
 class AppWindow(Gtk.ApplicationWindow):
 
     def __init__(self, app):
-        Gtk.Window.__init__(self, application=app)
+        super().__init__(application=app)
         self.set_title("Hello World")
 
 
 class Application(Gtk.Application):
 
     def __init__(self):
-        Gtk.Application.__init__(self)
+        super().__init__()
 
     def do_startup(self):
         Gtk.Application.do_startup(self)
