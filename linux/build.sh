@@ -23,7 +23,7 @@ chmod +x appimagetool-$(uname -m).AppImage
 
 echo "Running appimagetool..."
 
-ARCH=$(uname -m) ./appimagetool*AppImage dist/$APP
+ARCH=$(uname -m) ./appimagetool-$(uname -m).AppImage dist/$APP
 rm appimagetool-$(uname -m).AppImage
 mv *.AppImage $APP-$version-$(uname -m).AppImage
 echo $(sha256sum $APP-$version-$(uname -m).AppImage) > $APP-$version-$(uname -m).AppImage.sha256
