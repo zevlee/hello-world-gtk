@@ -7,8 +7,7 @@ a = Analysis(
 	pathex=[],
 	binaries=[],
 	datas=[
-		('../lib/__init__.py', 'lib'),
-		('../lib/application.py', 'lib'),
+		('../lib', 'lib'),
 		('../hello-world-gtk.svg', '.'),
 		('../LICENSE', '.'),
 		('../VERSION', '.')
