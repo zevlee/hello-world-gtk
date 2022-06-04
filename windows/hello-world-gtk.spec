@@ -8,7 +8,7 @@ a = Analysis(
 	binaries=[],
 	datas=[
 		('../lib', 'lib'),
-		('../hello-world-gtk.svg', '.'),
+		('../org.example.HelloWorldGTK.svg', '.'),
 		('../LICENSE', '.'),
 		('../VERSION', '.')
 	],
