@@ -14,10 +14,10 @@ a = Analysis(
 	],
 	hooksconfig={
 		'gi': {
-			'icons': ['Adwaita'],
-			'themes': ['Adwaita'],
+			'icons': ['hicolor'],
+			'themes': ['hicolor'],
 			'module-versions': {
-				'Gtk': '4.0'
+				'Gtk': '3.0'
 			}
 		}
 	},
