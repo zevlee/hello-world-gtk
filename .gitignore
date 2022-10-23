@@ -3,3 +3,5 @@ lib/__pycache__/
 */dist/
 */venv/
 venv/
+.project
+.pydevproject
