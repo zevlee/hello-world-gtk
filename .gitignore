@@ -3,6 +3,8 @@ lib/__pycache__/
 */dist/
 */venv/
 venv/
+
+# Eclipse IDE project files
 .project
 .pydevproject
-.settings
+.settings/
