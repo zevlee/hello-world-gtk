@@ -3,12 +3,15 @@
 APP=hello-world-gtk
 NAME="Hello World"
 
-echo "Setting up virtual environment..."
-
-/usr/local/bin/python3 -m venv --system-site-packages venv
-. venv/bin/activate
-python3 -m pip install --upgrade pip
-PYINSTALLER_COMPILE_BOOTLOADER=1 PYI_STATIC_ZLIB=1 python3 -m pip install -r ../requirements.txt
+if [ ! -d ../venv ]; then
+	echo "Setting up virtual environment..."
+	python3 -m venv --system-site-packages venv
+	. venv/bin/activate
+	python3 -m pip install --upgrade pip
+	PYINSTALLER_COMPILE_BOOTLOADER=1 PYI_STATIC_ZLIB=1 python3 -m pip install -r ../requirements.txt
+else
+	. ../venv/bin/activate
+fi
 
 echo "Preparing app..."
 
@@ -49,5 +52,8 @@ echo $(shasum -a 256 "$APP-$version.dmg") > "$APP-$version.dmg.sha256"
 echo "Cleaning up..."
 
 deactivate
-rm -r build dist "$APP.dmg" "$APP@.spec" venv
+rm -r build dist "$APP.dmg" "$APP@.spec"
+if [ ! -d ../venv ]; then
+	rm -r venv
+fi
 mv "$APP-$version.dmg"* ../..
