@@ -32,6 +32,10 @@ chmod +x bootstrap.sh && ./bootstrap.sh
 ```
 chmod +x build.sh && ./build.sh
 ```
+Create a portable executable by adding the portable option
+```
+./build.sh portable
+```
 
 ### Building on macOS
 1. Homebrew is needed to install PyGObject. [Get it from the Homebrew website.](https://brew.sh)
