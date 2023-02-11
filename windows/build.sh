@@ -16,19 +16,22 @@ fi
 
 echo "Running pyinstaller..."
 
-python3 -OO -m PyInstaller $APP.spec
-
-echo "Preparing app..."
-
-cd dist/$APP
-zip -r $APP.zip *
-mv $APP.zip ../..
-cd ../..
-echo $(du -sk dist/$APP | cut -f 1) > INSTALLSIZE
-
-echo "Running makensis..."
-
-makensis $APP.nsi
+if [ "$1" != "portable" ]; then
+	python3 -OO -m PyInstaller $APP.spec
+	echo "Preparing app..."
+	cd dist/$APP
+	zip -r $APP.zip *
+	mv $APP.zip ../..
+	cd ../..
+	echo $(du -sk dist/$APP | cut -f 1) > INSTALLSIZE
+	echo "Running makensis..."
+	makensis $APP.nsi
+else
+	python3 -OO -m PyInstaller $APP-portable.spec
+	echo "Preparing app..."
+	version=$(cat ../VERSION)
+	mv dist/* ./$APP-$version-portable.exe
+fi
 for exe in $APP*.exe; do
     echo $(sha256sum $exe) > $exe.sha256
 done
@@ -37,11 +40,15 @@ echo "Cleaning up..."
 
 deactivate
 mv $APP*.exe* ../..
-rm $APP.zip
-rm INSTALLSIZE
 rm -r build
-rm -r dist/*/*
-rm -r dist
+if [ "$1" != "portable" ]; then
+	rm $APP.zip
+	rm INSTALLSIZE
+	rm -r dist/*/*
+	rm -r dist
+else
+	rm -r dist
+fi
 if [ ! -d ../venv ]; then
 	rm -r venv
 fi
