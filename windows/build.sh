@@ -30,7 +30,7 @@ else
 	python3 -OO -m PyInstaller $APP-portable.spec
 	echo "Preparing app..."
 	version=$(cat ../VERSION)
-	mv dist/* ./$APP-$version-$(uname -m)-portable.exe
+	mv dist/* ./$APP-$version-portable.exe
 fi
 for exe in $APP*.exe; do
     echo $(sha256sum $exe) > $exe.sha256
