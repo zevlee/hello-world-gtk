@@ -24,13 +24,14 @@ if [ "$1" != "portable" ]; then
 	mv $APP.zip ../..
 	cd ../..
 	echo $(du -sk dist/$APP | cut -f 1) > INSTALLSIZE
+	echo $(uname -m) > ARCH
 	echo "Running makensis..."
 	makensis $APP.nsi
 else
 	python3 -OO -m PyInstaller $APP-portable.spec
 	echo "Preparing app..."
 	version=$(cat ../VERSION)
-	mv dist/* ./$APP-$version-portable.exe
+	mv dist/* ./$APP-$version-$(uname -m)-portable.exe
 fi
 for exe in $APP*.exe; do
     echo $(sha256sum $exe) > $exe.sha256
@@ -44,6 +45,7 @@ rm -r build
 if [ "$1" != "portable" ]; then
 	rm $APP.zip
 	rm INSTALLSIZE
+	rm ARCH
 	rm -r dist/*/*
 	rm -r dist
 else

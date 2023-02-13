@@ -9,12 +9,13 @@ Unicode True
 
 !define /file VERSION "..\VERSION"
 !define /file INSTALLSIZE "INSTALLSIZE"
+!define /file ARCH "ARCH"
 
 InstallDir "$PROGRAMFILES\${APPNAME}"
 
 Name "${APPNAME}"
 Icon "${FILENAME}.ico"
-outFile "${FILENAME}-${VERSION}.exe"
+outFile "${FILENAME}-${VERSION}-${ARCH}.exe"
 
 !include LogicLib.nsh
 
