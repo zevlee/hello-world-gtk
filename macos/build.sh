@@ -29,11 +29,11 @@ python3 -OO -m PyInstaller "$APP@.spec" --noconfirm
 if [ ! -z "$2" ]; then
     echo "Notarizing app..."
     cd dist
-    ditto -ck --sequesterRsrc --keepParent "$NAME.app" "$APP-$version.zip"
+    ditto -ck --sequesterRsrc --keepParent "$NAME.app" "$APP-$version-$(uname -m).zip"
     if [ ! -z "$3" ]; then
-        xcrun notarytool submit "$APP-$version.zip" --apple-id "$2" --team-id "$3" --password "$4" --wait
+        xcrun notarytool submit "$APP-$version-$(uname -m).zip" --apple-id "$2" --team-id "$3" --password "$4" --wait
     else
-        xcrun notarytool submit "$APP-$version.zip" --keychain-profile "$2" --wait
+        xcrun notarytool submit "$APP-$version-$(uname -m).zip" --keychain-profile "$2" --wait
     fi
     xcrun stapler staple "$NAME.app"
     cd ..
@@ -46,8 +46,8 @@ dir="$(echo $(hdiutil attach $APP.dmg | cut -f 3) | cut -f 1)"
 mv "dist/$NAME.app" "$dir"
 ln -s /Applications "$dir"
 hdiutil detach "$dir"
-hdiutil convert "$APP.dmg" -format UDZO -o "$APP-$version.dmg"
-echo $(shasum -a 256 "$APP-$version.dmg") > "$APP-$version.dmg.sha256"
+hdiutil convert "$APP.dmg" -format UDZO -o "$APP-$version-$(uname -m).dmg"
+echo $(shasum -a 256 "$APP-$version-$(uname -m).dmg") > "$APP-$version-$(uname -m).dmg.sha256"
 
 echo "Cleaning up..."
 
@@ -56,4 +56,4 @@ rm -r build dist "$APP.dmg" "$APP@.spec"
 if [ ! -d ../venv ]; then
 	rm -r venv
 fi
-mv "$APP-$version.dmg"* ../..
+mv "$APP-$version-$(uname -m).dmg"* ../..
