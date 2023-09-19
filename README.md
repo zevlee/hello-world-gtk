@@ -11,7 +11,7 @@ GTK3 and GTK4 are fully supported.
 
 ### Building on Windows
 1. MSYS2 is needed to build on Windows. [Get it from the MSYS2 website.](https://www.msys2.org/)
-2. Go to your folder for MSYS2 and run ``mingw64.exe``. The following commands will be executed in the console that appears.
+2. Go to your folder for MSYS2 and run `mingw64.exe`. The following commands will be executed in the console that appears.
 3. Install git.
 ```
 pacman -S git
@@ -20,17 +20,17 @@ pacman -S git
 ```
 git clone https://github.com/zevlee/hello-world-gtk.git
 ```
-5. Enter the ``windows`` directory.
+5. Enter the `windows` directory.
 ```
 cd hello-world-gtk/windows
 ```
-6. Run ``bootstrap.sh`` to install any missing dependencies.
+6. Run `bootstrap.sh` to install any missing dependencies.
 ```
-chmod +x bootstrap.sh && ./bootstrap.sh
+./bootstrap.sh
 ```
-7. Run ``build.sh``.
+7. Run `build.sh`.
 ```
-chmod +x build.sh && ./build.sh
+./build.sh
 ```
 Create a portable executable by adding the portable option
 ```
@@ -43,17 +43,17 @@ Create a portable executable by adding the portable option
 ```
 git clone https://github.com/zevlee/hello-world-gtk.git
 ```
-3. Enter the ``macos`` directory.
+3. Enter the `macos` directory.
 ```
 cd hello-world-gtk/macos
 ```
-4. Run ``bootstrap.sh`` to install any missing dependencies.
+4. Run `bootstrap.sh` to install any missing dependencies.
 ```
-chmod +x bootstrap.sh && ./bootstrap.sh
+./bootstrap.sh
 ```
-5. Run ``build.sh``.
+5. Run `build.sh`.
 ```
-chmod +x build.sh && ./build.sh
+./build.sh
 ```
 Enable code signing by adding the Common Name of the certificate as the first argument. Without this, adhoc signing will be used.
 ```
@@ -74,15 +74,15 @@ Notarization can alternatively be enabled by adding Apple ID, Team ID, and an ap
 ```
 git clone https://github.com/zevlee/hello-world-gtk.git
 ```
-3. Enter the ``linux`` directory.
+3. Enter the `linux` directory.
 ```
 cd hello-world-gtk/linux
 ```
-4. Run ``bootstrap.sh`` to install any missing dependencies.
+4. Run `bootstrap.sh` to install any missing dependencies.
 ```
-chmod +x bootstrap.sh && ./bootstrap.sh
+./bootstrap.sh
 ```
-5. Run ``build.sh``.
+5. Run `build.sh`.
 ```
-chmod +x build.sh && ./build.sh
+./build.sh
 ```
