@@ -3,21 +3,19 @@
 block_cipher = None
 
 a = Analysis(
-	['../hello-world-gtk'],
+	['../helloworldgtk.py'],
 	pathex=[],
 	binaries=[],
 	datas=[
-		('../lib', 'lib'),
+		('../helloworldgtk', 'helloworldgtk'),
 		('../org.example.HelloWorldGTK.svg', '.'),
 		('../LICENSE', '.'),
 		('../VERSION', '.')
 	],
 	hooksconfig={
 		'gi': {
-			'icons': ['Adwaita'],
-			'themes': ['Adwaita'],
 			'module-versions': {
-				'Gtk': '4.0'
+				'Gtk': '3.0'
 			}
 		}
 	},

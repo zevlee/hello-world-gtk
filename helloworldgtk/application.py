@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from lib.window import Window
+from .window import Window
 from gi import require_versions
 require_versions({"Gtk": "3.0"})
 from gi.repository import Gtk

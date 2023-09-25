@@ -3,11 +3,11 @@
 block_cipher = None
 
 a = Analysis(
-	['../hello-world-gtk'],
+	['../helloworldgtk.py'],
 	pathex=[],
 	binaries=[],
 	datas=[
-		('../lib', 'lib'),
+		('../helloworldgtk', 'helloworldgtk'),
 		('../org.example.HelloWorldGTK.svg', '.'),
 		('../LICENSE', '.'),
 		('../VERSION', '.'),
