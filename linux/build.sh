@@ -21,6 +21,8 @@ echo "Preparing app..."
 VERSION=$(cat ../VERSION)
 mv dist/$APP/$APP dist/$APP/AppRun
 sed -i "s/X-AppImage-Version=VERSION/X-AppImage-Version="$VERSION"/g" dist/$APP/_internal/$APP.desktop
+ln -s _internal/$APP.desktop dist/$APP/$APP.desktop
+ln -s _internal/$ICON dist/$APP/$ICON
 wget https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-$(uname -m).AppImage
 chmod +x appimagetool-$(uname -m).AppImage
 
