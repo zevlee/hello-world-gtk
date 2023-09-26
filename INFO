@@ -1,0 +1,5 @@
+#!/bin/sh
+
+APP=hello-world-gtk
+NAME="Hello World"
+ICON=org.example.HelloWorldGTK.svg
