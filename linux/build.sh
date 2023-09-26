@@ -1,6 +1,6 @@
 #!/bin/sh
 
-APP=hello-world-gtk
+. ../INFO
 
 if [ ! -d ../venv ]; then
 	echo "Setting up virtual environment..."
@@ -18,18 +18,18 @@ python3 -OO -m PyInstaller $APP.spec --noconfirm
 
 echo "Preparing app..."
 
-version=$(cat ../VERSION)
+VERSION=$(cat ../VERSION)
 mv dist/$APP/$APP dist/$APP/AppRun
-sed -i "s/X-AppImage-Version=VERSION/X-AppImage-Version="$version"/g" dist/$APP/$APP.desktop
-wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-$(uname -m).AppImage
+sed -i "s/X-AppImage-Version=VERSION/X-AppImage-Version="$VERSION"/g" dist/$APP/_internal/$APP.desktop
+wget https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-$(uname -m).AppImage
 chmod +x appimagetool-$(uname -m).AppImage
 
 echo "Running appimagetool..."
 
 ARCH=$(uname -m) ./appimagetool-$(uname -m).AppImage dist/$APP
 rm appimagetool-$(uname -m).AppImage
-mv *.AppImage $APP-$version-$(uname -m).AppImage
-echo $(sha256sum $APP-$version-$(uname -m).AppImage) > $APP-$version-$(uname -m).AppImage.sha256
+mv *.AppImage $APP-$VERSION-$(uname -m).AppImage
+echo $(sha256sum $APP-$VERSION-$(uname -m).AppImage) > $APP-$VERSION-$(uname -m).AppImage.sha256
 
 echo "Cleaning up..."
 
@@ -38,4 +38,4 @@ rm -r build dist
 if [ ! -d ../venv ]; then
 	rm -r venv
 fi
-mv $APP-$version-$(uname -m).AppImage* ../..
+mv $APP-$VERSION-$(uname -m).AppImage* ../..

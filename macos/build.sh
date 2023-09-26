@@ -1,7 +1,6 @@
 #!/bin/sh
 
-APP=hello-world-gtk
-NAME="Hello World"
+. ../INFO
 
 if [ ! -d ../venv ]; then
 	echo "Setting up virtual environment..."

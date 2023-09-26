@@ -2,7 +2,7 @@
 
 # This script is meant to be run through MinGW
 
-APP=hello-world-gtk
+. ../INFO
 
 if [ ! -d ../venv ]; then
 	echo "Setting up virtual environment..."
@@ -30,8 +30,8 @@ if [ "$1" != "portable" ]; then
 else
 	python3 -OO -m PyInstaller $APP-portable.spec
 	echo "Preparing app..."
-	version=$(cat ../VERSION)
-	mv dist/* ./$APP-$version-$(uname -m)-portable.exe
+	VERSION=$(cat ../VERSION)
+	mv dist/* ./$APP-$VERSION-$(uname -m)-portable.exe
 fi
 for exe in $APP*.exe; do
     echo $(sha256sum $exe) > $exe.sha256
