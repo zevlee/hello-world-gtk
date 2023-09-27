@@ -21,7 +21,8 @@ cd hello-world-gtk/windows
 ```
 ./build.sh
 ```
-Create a portable executable by adding the portable option
-```
-./build.sh portable
-```
+Build Options
+Flag | Description
+:-- | :--
+`-p` | Build a portable binary (Without this flag, builds an installer)
+`-h` | Display help dialog
