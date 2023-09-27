@@ -16,30 +16,30 @@ setup_venv() {
 # Function to make AppImage
 make_appimage() {
 	echo "Running pyinstaller..."
-	python3 -OO -m PyInstaller $APP.spec --noconfirm
+	python3 -OO -m PyInstaller ${APP}.spec --noconfirm
 	echo "Preparing app..."
-	mv dist/$APP/$APP dist/$APP/AppRun
-	sed -i "s/X-AppImage-Version=VERSION/X-AppImage-Version="$VERSION"/g" dist/$APP/_internal/$APP.desktop
-	ln -s _internal/$APP.desktop dist/$APP/$APP.desktop
-	ln -s _internal/$ICON dist/$APP/$ICON
+	mv dist/${APP}/${APP} dist/${APP}/AppRun
+	sed -i "s/X-AppImage-Version=VERSION/X-AppImage-Version="${VERSION}"/g" dist/${APP}/_internal/${APP}.desktop
+	ln -s _internal/${APP}.desktop dist/${APP}/${APP}.desktop
+	ln -s _internal/${ICON} dist/${APP}/${ICON}
 	wget https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-$(uname -m).AppImage
 	chmod +x appimagetool-$(uname -m).AppImage
 	echo "Running appimagetool..."
-	ARCH=$(uname -m) ./appimagetool-$(uname -m).AppImage dist/$APP
+	ARCH=$(uname -m) ./appimagetool-$(uname -m).AppImage dist/${APP}
 	rm appimagetool-$(uname -m).AppImage
-	PACKAGE=$APP-$VERSION-$(uname -m).AppImage
-	mv *.AppImage $PACKAGE
-	echo $(sha256sum $PACKAGE) > $PACKAGE.sha256
+	PACKAGE=${APP}-${VERSION}-$(uname -m).AppImage
+	mv *.AppImage ${PACKAGE}
+	echo $(sha256sum ${PACKAGE}) > ${PACKAGE}.sha256
 }
 
 # Function to make portable binary
 make_binary() {
 	echo "Running pyinstaller..."
-	python3 -OO -m PyInstaller $APP-portable.spec --noconfirm
+	python3 -OO -m PyInstaller ${APP}-portable.spec --noconfirm
 	echo "Preparing app..."
-	PACKAGE=$APP-$VERSION-$(uname -m)-portable.tar.gz
-	tar -czf $PACKAGE -C dist $APP -C ../.. LICENSE
-	echo $(sha256sum $PACKAGE) > $PACKAGE.sha256
+	PACKAGE=${APP}-${VERSION}-$(uname -m)-portable.tar.gz
+	tar -czf ${PACKAGE} -C dist ${APP} -C ../.. LICENSE
+	echo $(sha256sum ${PACKAGE}) > ${PACKAGE}.sha256
 }
 
 # Function to clean up build artifacts
@@ -47,7 +47,7 @@ clean_up() {
 	echo "Cleaning up..."
 	deactivate
 	rm -rf build dist venv
-	mv $PACKAGE* ../..
+	mv ${PACKAGE}* ../..
 }
 
 # Function to display help
@@ -68,7 +68,7 @@ main() {
 	. ../INFO
 	VERSION=$(cat ../VERSION)
 	while getopts "ph" OPTION; do
-		case $OPTION in
+		case ${OPTION} in
 			p)
 				setup_venv
 				make_binary

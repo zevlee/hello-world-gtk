@@ -16,36 +16,36 @@ setup_venv() {
 # Function to make installer
 make_installer() {
 	echo "Running pyinstaller..."
-	python3 -OO -m PyInstaller $APP.spec
+	python3 -OO -m PyInstaller ${APP}.spec
 	echo "Preparing app..."
-	cd dist/$APP
-	zip -r $APP.zip *
-	mv $APP.zip ../..
+	cd dist/${APP}
+	zip -r ${APP}.zip *
+	mv ${APP}.zip ../..
 	cd ../..
-	echo $(du -sk dist/$APP | cut -f 1) > INSTALLSIZE
+	echo $(du -sk dist/${APP} | cut -f 1) > INSTALLSIZE
 	echo $(uname -m) > ARCH
 	echo "Running makensis..."
-	makensis $APP.nsi
-	PACKAGE=$APP-$VERSION-$(uname -m).exe
-	echo $(sha256sum $PACKAGE) > $PACKAGE.sha256
+	makensis ${APP}.nsi
+	PACKAGE=${APP}-${VERSION}-$(uname -m).exe
+	echo $(sha256sum ${PACKAGE}) > ${PACKAGE}.sha256
 }
 
 # Function to make portable binary
 make_binary() {
 	echo "Running pyinstaller..."
-	python3 -OO -m PyInstaller $APP-portable.spec
+	python3 -OO -m PyInstaller ${APP}-portable.spec
 	echo "Preparing app..."
-	PACKAGE=$APP-$VERSION-$(uname -m)-portable.exe
-	mv dist/* ./$PACKAGE
-	echo $(sha256sum $PACKAGE) > $PACKAGE.sha256
+	PACKAGE=${APP}-${VERSION}-$(uname -m)-portable.exe
+	mv dist/* ./${PACKAGE}
+	echo $(sha256sum ${PACKAGE}) > ${PACKAGE}.sha256
 }
 
 # Function to clean up build artifacts
 clean_up() {
 	echo "Cleaning up..."
 	deactivate
-	mv $PACKAGE* ../..
-	rm -rf build $APP.zip INSTALLSIZE ARCH dist venv
+	mv ${PACKAGE}* ../..
+	rm -rf build ${APP}.zip INSTALLSIZE ARCH dist venv
 }
 
 # Function to display help
@@ -66,7 +66,7 @@ main() {
 	. ../INFO
 	VERSION=$(cat ../VERSION)
 	while getopts "ph" OPTION; do
-		case $OPTION in
+		case ${OPTION} in
 			p)
 				setup_venv
 				make_binary
