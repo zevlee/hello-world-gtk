@@ -30,13 +30,6 @@ make_appimage() {
 	PACKAGE=$APP-$VERSION-$(uname -m).AppImage
 	mv *.AppImage $PACKAGE
 	echo $(sha256sum $PACKAGE) > $PACKAGE.sha256
-	echo "Cleaning up..."
-	deactivate
-	rm -r build dist
-	if [ ! -d ../venv ]; then
-		rm -r venv
-	fi
-	mv $PACKAGE* ../..
 }
 
 # Function to make portable binary
@@ -47,6 +40,10 @@ make_binary() {
 	PACKAGE=$APP-$VERSION-$(uname -m)-portable.tar.gz
 	tar -czf $PACKAGE -C dist $APP -C ../.. LICENSE
 	echo $(sha256sum $PACKAGE) > $PACKAGE.sha256
+}
+
+# Function to clean up build artifacts
+clean_up() {
 	echo "Cleaning up..."
 	deactivate
 	rm -r build dist
@@ -77,6 +74,7 @@ main() {
 			p)
 				setup_venv
 				make_binary
+				clean_up
 				exit 0
 				;;
 			h)
@@ -90,6 +88,7 @@ main() {
 	done
 	setup_venv
 	make_appimage
+	clean_up
 }
 
 main "$@"
