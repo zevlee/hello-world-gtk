@@ -1,43 +1,95 @@
 #!/bin/sh
 
-. ../INFO
+# Function to set up virtual environment
+setup_venv() {
+	if [ ! -d ../venv ]; then
+		echo "Setting up virtual environment..."
+		python3 -m venv --system-site-packages venv
+		. venv/bin/activate
+		python3 -m pip install --upgrade pip
+		python3 -m pip install -r ../requirements.txt
+	else
+		. ../venv/bin/activate
+	fi
+}
 
-if [ ! -d ../venv ]; then
-	echo "Setting up virtual environment..."
-	python3 -m venv --system-site-packages venv
-	. venv/bin/activate
-	python3 -m pip install --upgrade pip
-	python3 -m pip install -r ../requirements.txt
-else
-	. ../venv/bin/activate
-fi
+# Function to make AppImage
+make_appimage() {
+	echo "Running pyinstaller..."
+	python3 -OO -m PyInstaller $APP.spec --noconfirm
+	echo "Preparing app..."
+	mv dist/$APP/$APP dist/$APP/AppRun
+	sed -i "s/X-AppImage-Version=VERSION/X-AppImage-Version="$VERSION"/g" dist/$APP/_internal/$APP.desktop
+	ln -s _internal/$APP.desktop dist/$APP/$APP.desktop
+	ln -s _internal/$ICON dist/$APP/$ICON
+	wget https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-$(uname -m).AppImage
+	chmod +x appimagetool-$(uname -m).AppImage
+	echo "Running appimagetool..."
+	ARCH=$(uname -m) ./appimagetool-$(uname -m).AppImage dist/$APP
+	rm appimagetool-$(uname -m).AppImage
+	PACKAGE=$APP-$VERSION-$(uname -m).AppImage
+	mv *.AppImage $PACKAGE
+	echo $(sha256sum $PACKAGE) > $PACKAGE.sha256
+	echo "Cleaning up..."
+	deactivate
+	rm -r build dist
+	if [ ! -d ../venv ]; then
+		rm -r venv
+	fi
+	mv $PACKAGE* ../..
+}
 
-echo "Running pyinstaller..."
+# Function to make portable binary
+make_binary() {
+	echo "Running pyinstaller..."
+	python3 -OO -m PyInstaller $APP-portable.spec --noconfirm
+	echo "Preparing app..."
+	PACKAGE=$APP-$VERSION-$(uname -m)-portable.tar.gz
+	tar -czf $PACKAGE -C dist $APP -C ../.. LICENSE
+	echo $(sha256sum $PACKAGE) > $PACKAGE.sha256
+	echo "Cleaning up..."
+	deactivate
+	rm -r build dist
+	if [ ! -d ../venv ]; then
+		rm -r venv
+	fi
+	mv $PACKAGE* ../..
+}
 
-python3 -OO -m PyInstaller $APP.spec --noconfirm
+# Function to display help
+show_help() {
+	echo "Build a Linux executable file, either an AppImage or portable binary"
+	echo
+	echo "Syntax: ./build.sh [-p|h]"
+	echo
+	echo "Options:"
+	echo "-p      Build a portable binary"
+	echo "-h      Display help dialog"
+	echo
+}
 
-echo "Preparing app..."
+# Main function
+main() {
+	. ../INFO
+	VERSION=$(cat ../VERSION)
+	while getopts "ph" OPTION; do
+		case $OPTION in
+			p)
+				setup_venv
+				make_binary
+				exit 0
+				;;
+			h)
+				show_help
+				exit 0
+				;;
+			?)
+				exit 1
+				;;
+		esac
+	done
+	setup_venv
+	make_appimage
+}
 
-VERSION=$(cat ../VERSION)
-mv dist/$APP/$APP dist/$APP/AppRun
-sed -i "s/X-AppImage-Version=VERSION/X-AppImage-Version="$VERSION"/g" dist/$APP/_internal/$APP.desktop
-ln -s _internal/$APP.desktop dist/$APP/$APP.desktop
-ln -s _internal/$ICON dist/$APP/$ICON
-wget https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-$(uname -m).AppImage
-chmod +x appimagetool-$(uname -m).AppImage
-
-echo "Running appimagetool..."
-
-ARCH=$(uname -m) ./appimagetool-$(uname -m).AppImage dist/$APP
-rm appimagetool-$(uname -m).AppImage
-mv *.AppImage $APP-$VERSION-$(uname -m).AppImage
-echo $(sha256sum $APP-$VERSION-$(uname -m).AppImage) > $APP-$VERSION-$(uname -m).AppImage.sha256
-
-echo "Cleaning up..."
-
-deactivate
-rm -r build dist
-if [ ! -d ../venv ]; then
-	rm -r venv
-fi
-mv $APP-$VERSION-$(uname -m).AppImage* ../..
+main "$@"
