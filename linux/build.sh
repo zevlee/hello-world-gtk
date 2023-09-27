@@ -46,10 +46,7 @@ make_binary() {
 clean_up() {
 	echo "Cleaning up..."
 	deactivate
-	rm -r build dist
-	if [ ! -d ../venv ]; then
-		rm -r venv
-	fi
+	rm -rf build dist venv
 	mv $PACKAGE* ../..
 }
 
