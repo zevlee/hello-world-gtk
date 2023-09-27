@@ -1,22 +1,21 @@
 #!/bin/sh
 
-# This script is meant to be run through MinGW
+# Function to set up virtual environment
+setup_venv() {
+	if [ ! -d ../venv ]; then
+		echo "Setting up virtual environment..."
+		python3 -m venv --system-site-packages venv
+		. venv/bin/activate
+		python3 -m pip install --upgrade pip
+		python3 -m pip install -r ../requirements.txt
+	else
+		. ../venv/bin/activate
+	fi
+}
 
-. ../INFO
-
-if [ ! -d ../venv ]; then
-	echo "Setting up virtual environment..."
-	python3 -m venv --system-site-packages venv
-	. venv/bin/activate
-	python3 -m pip install --upgrade pip
-	python3 -m pip install -r ../requirements.txt
-else
-	. ../venv/bin/activate
-fi
-
-echo "Running pyinstaller..."
-
-if [ "$1" != "portable" ]; then
+# Function to make installer
+make_installer() {
+	echo "Running pyinstaller..."
 	python3 -OO -m PyInstaller $APP.spec
 	echo "Preparing app..."
 	cd dist/$APP
@@ -27,30 +26,64 @@ if [ "$1" != "portable" ]; then
 	echo $(uname -m) > ARCH
 	echo "Running makensis..."
 	makensis $APP.nsi
-else
+	PACKAGE=$APP-$VERSION-$(uname -m).exe
+	echo $(sha256sum $PACKAGE) > $PACKAGE.sha256
+}
+
+# Function to make portable binary
+make_binary() {
+	echo "Running pyinstaller..."
 	python3 -OO -m PyInstaller $APP-portable.spec
 	echo "Preparing app..."
+	PACKAGE=$APP-$VERSION-$(uname -m)-portable.exe
+	mv dist/* ./$PACKAGE
+	echo $(sha256sum $PACKAGE) > $PACKAGE.sha256
+}
+
+# Function to clean up build artifacts
+clean_up() {
+	echo "Cleaning up..."
+	deactivate
+	mv $PACKAGE* ../..
+	rm -rf build $APP.zip INSTALLSIZE ARCH dist venv
+}
+
+# Function to display help
+show_help() {
+	echo "Build a Windows executable file, either an installer or portable binary"
+	echo
+	echo "Syntax: ./build.sh [-p|h]"
+	echo
+	echo "Options:"
+	echo "-p      Build a portable binary"
+	echo "-h      Display help dialog"
+	echo
+}
+
+# Main function
+main() {
+	. ../INFO
 	VERSION=$(cat ../VERSION)
-	mv dist/* ./$APP-$VERSION-$(uname -m)-portable.exe
-fi
-for exe in $APP*.exe; do
-    echo $(sha256sum $exe) > $exe.sha256
-done
+	while getopts "ph" OPTION; do
+		case $OPTION in
+			p)
+				setup_venv
+				make_binary
+				clean_up
+				exit 0
+				;;
+			h)
+				show_help
+				exit 0
+				;;
+			?)
+				exit 1
+				;;
+		esac
+	done
+	setup_venv
+	make_installer
+	clean_up
+}
 
-echo "Cleaning up..."
-
-deactivate
-mv $APP*.exe* ../..
-rm -r build
-if [ "$1" != "portable" ]; then
-	rm $APP.zip
-	rm INSTALLSIZE
-	rm ARCH
-	rm -r dist/*/*
-	rm -r dist
-else
-	rm -r dist
-fi
-if [ ! -d ../venv ]; then
-	rm -r venv
-fi
+main "$@"
