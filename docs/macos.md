@@ -16,15 +16,33 @@ cd hello-world-gtk/macos
 ```
 ./build.sh
 ```
+Build Options
+Flag | Description
+:-- | :--
+`-h` | Display help dialog
+
+Build Arguments
+Flag | Description
+:-- | :--
+`-c CERT` | Common Name of Certificate
+`-k KEYC` | Name of stored Keychain Profile
+`-a APID` | Apple ID
+`-t TMID` | Team ID
+`-p PASS` | App-Specific Password
+
 Enable code signing by adding the Common Name of the certificate as the first argument. Without this, adhoc signing will be used.
 ```
-./build.sh "Developer ID Application: Name Here (TEAMIDHERE)"
+./build.sh -c "Developer ID Application: Name Here (TEAMIDHERE)"
 ```
 Enable notarization by also adding the name of a stored keychain profile.
 ```
-./build.sh "Developer ID Application: Name Here (TEAMIDHERE)" "keychain-profile-here"
+./build.sh -c "Developer ID Application: Name Here (TEAMIDHERE)" \
+	-k "keychain-profile-here"
 ```
-Notarization can alternatively be enabled by adding Apple ID, Team ID, and an app-specific password as subsequent arguments.
+Alternatively, enable notarization by adding Apple ID, Team ID, and an app-specific password as arguments.
 ```
-./build.sh "Developer ID Application: Name Here (TEAMIDHERE)" "appleid@here.com" "TEAMIDHERE" "pass-word-goes-here"
+./build.sh -c "Developer ID Application: Name Here (TEAMIDHERE)" \
+	-a "appleid@here.com" \
+	-t "TEAMIDHERE" \
+	-p "pass-word-goes-here"
 ```
