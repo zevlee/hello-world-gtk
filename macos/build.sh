@@ -17,49 +17,49 @@ setup_venv() {
 make_app() {
 	echo "Preparing app..."
 	VERSION=$(cat ../VERSION)
-	cp "$APP.spec" "$APP@.spec"
-	sed -i '' "s/'VERSION'/'$VERSION'/g" "$APP@.spec"
-	if [ ! -z "$CERT" ]; then
-	    sed -i '' "s/codesign_identity=''/codesign_identity='$CERT'/g" "$APP@.spec"
+	cp "${APP}.spec" "${APP}@.spec"
+	sed -i '' "s/'VERSION'/'${VERSION}'/g" "${APP}@.spec"
+	if [ ! -z "${CERT}" ]; then
+	    sed -i '' "s/codesign_identity=''/codesign_identity='${CERT}'/g" "${APP}@.spec"
 	fi
 	echo "Running pyinstaller..."
-	python3 -OO -m PyInstaller "$APP@.spec" --noconfirm
+	python3 -OO -m PyInstaller "${APP}@.spec" --noconfirm
 }
 
 # Function to notarize app bundle
 notarize_app() {
 	echo "Notarizing app..."
 	cd dist
-	ZIP="$APP-$VERSION-$(uname -m).zip"
-	ditto -ck --sequesterRsrc --keepParent "$NAME.app" "$ZIP"
-	if [ ! -z "$KEYC" ]; then
-		xcrun notarytool submit "$ZIP" --keychain-profile "$KEYC" --wait
+	ZIP="${APP}-${VERSION}-$(uname -m).zip"
+	ditto -ck --sequesterRsrc --keepParent "${NAME}.app" "${ZIP}"
+	if [ ! -z "${KEYC}" ]; then
+		xcrun notarytool submit "${ZIP}" --keychain-profile "${KEYC}" --wait
 	else
-		xcrun notarytool submit "$ZIP" --apple-id "$APID" --team-id "$TMID" --password "$PASS" --wait
+		xcrun notarytool submit "${ZIP}" --apple-id "${APID}" --team-id "${TMID}" --password "${PASS}" --wait
 	fi
-	xcrun stapler staple "$NAME.app"
+	xcrun stapler staple "${NAME}.app"
 	cd ..
 }
 
 # Function to build DMG
 build_dmg() {
 	echo "Building DMG..."
-	hdiutil create -size $(($(du -sk "dist/$NAME.app"/ | awk '{print $1}')*175/100))k -fs HFS+ -volname "$NAME" -o "$APP.dmg"
-	DIR="$(echo $(hdiutil attach $APP.dmg | cut -f 3) | cut -f 1)"
-	mv "dist/$NAME.app" "$DIR"
-	ln -s /Applications "$DIR"
-	hdiutil detach "$DIR"
-	PACKAGE="$APP-$VERSION-$(uname -m).dmg"
-	hdiutil convert "$APP.dmg" -format UDZO -o "$PACKAGE"
-	echo $(shasum -a 256 "$PACKAGE") > "$PACKAGE.sha256"
+	hdiutil create -size $(($(du -sk "dist/${NAME}.app"/ | awk '{print $1}')*175/100))k -fs HFS+ -volname "${NAME}" -o "${APP}.dmg"
+	DIR="$(echo $(hdiutil attach ${APP}.dmg | cut -f 3) | cut -f 1)"
+	mv "dist/${NAME}.app" "${DIR}"
+	ln -s /Applications "${DIR}"
+	hdiutil detach "${DIR}"
+	PACKAGE="${APP}-${VERSION}-$(uname -m).dmg"
+	hdiutil convert "${APP}.dmg" -format UDZO -o "${PACKAGE}"
+	echo $(shasum -a 256 "${PACKAGE}") > "${PACKAGE}.sha256"
 }
 
 # Function to clean up build artifacts
 clean_up() {
 	echo "Cleaning up..."
 	deactivate
-	rm -rf build dist "$APP.dmg" "$APP@.spec" venv
-	mv "$APP-$VERSION-$(uname -m).dmg"* ../..
+	rm -rf build dist "${APP}.dmg" "${APP}@.spec" venv
+	mv "${APP}-${VERSION}-$(uname -m).dmg"* ../..
 }
 
 # Function to display help
@@ -102,21 +102,21 @@ main() {
 	. ../INFO
 	VERSION=$(cat ../VERSION)
 	while getopts "c:k:a:t:p:h" OPTION; do
-		case $OPTION in
+		case ${OPTION} in
 			c)
-				CERT="$OPTARG"
+				CERT="${OPTARG}"
 				;;
 			k)
-				KEYC="$OPTARG"
+				KEYC="${OPTARG}"
 				;;
 			a)
-				APID="$OPTARG"
+				APID="${OPTARG}"
 				;;
 			t)
-				TMID="$OPTARG"
+				TMID="${OPTARG}"
 				;;
 			p)
-				PASS="$OPTARG"
+				PASS="${OPTARG}"
 				;;
 			h)
 				show_help
@@ -129,8 +129,8 @@ main() {
 	done
 	setup_venv
 	make_app
-	if [ ! -z "$CERT" ] && { [ ! -z "$KEYC" ] || { [ ! -z "$APID" ] && \
-			[ ! -z "$TMID" ] && [ ! -z "$PASS" ]; }; }; then
+	if [ ! -z "${CERT}" ] && { [ ! -z "${KEYC}" ] || { [ ! -z "${APID}" ] && \
+			[ ! -z "${TMID}" ] && [ ! -z "${PASS}" ]; }; }; then
 		notarize_app
 	fi
 	build_dmg
