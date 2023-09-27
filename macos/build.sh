@@ -85,12 +85,12 @@ show_help() {
 	echo
 	echo "Additionally enable notarization by adding the name of a stored"
 	echo "keychain profile KEYC"
-	echo "./build.sh -c 'Developer ID Application: Name Here (TEAMIDHERE) \\"
+	echo "./build.sh -c 'Developer ID Application: Name Here (TEAMIDHERE)' \\"
 	echo "    -k 'keychain-profile-here'"
 	echo
 	echo "Alternatively, enable notarization by adding Apple ID APID, Team"
 	echo "ID TMID, and App-Specific Password PASS"
-	echo "./build.sh -c 'Developer ID Application: Name Here (TEAMIDHERE) \\"
+	echo "./build.sh -c 'Developer ID Application: Name Here (TEAMIDHERE)' \\"
 	echo "    -a 'appleid@here.com' \\"
 	echo "    -t 'TEAMIDHERE' \\"
 	echo "    -p 'pass-word-goes-here'"
