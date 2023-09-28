@@ -67,9 +67,9 @@ show_help() {
 main() {
 	. ../INFO
 	VERSION=$(cat ../VERSION)
-	while getopts "ph" OPTION; do
+	while getopts "bh" OPTION; do
 		case ${OPTION} in
-			p)
+			b)
 				setup_venv
 				make_binary
 				clean_up
