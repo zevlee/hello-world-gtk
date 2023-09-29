@@ -59,7 +59,7 @@ make_binary() {
 	echo "Running pyinstaller..."
 	python3 -OO -m PyInstaller "${APP}-portable.spec" --noconfirm
 	echo "Preparing app..."
-	PACKAGE="${APP}-${VERSION}-$(uname -m)-portable.tar.gz"
+	PACKAGE="${APP}-${VERSION}-$(uname -m)-macos-portable.tar.gz"
 	tar -czf "${PACKAGE}" -C dist "${APP}" -C ../.. LICENSE
 	echo $(shasum -a 256 "${PACKAGE}") > "${PACKAGE}.sha256"
 }
