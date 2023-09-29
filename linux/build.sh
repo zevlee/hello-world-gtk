@@ -16,18 +16,18 @@ setup_venv() {
 # Function to make AppImage
 make_appimage() {
 	echo "Running pyinstaller..."
-	python3 -OO -m PyInstaller ${APP}.spec --noconfirm
+	python3 -OO -m PyInstaller ${FILENAME}.spec --noconfirm
 	echo "Preparing app..."
-	mv dist/${APP}/${APP} dist/${APP}/AppRun
-	sed -i "s/X-AppImage-Version=VERSION/X-AppImage-Version="${VERSION}"/g" dist/${APP}/_internal/${APP}.desktop
-	ln -s _internal/${APP}.desktop dist/${APP}/${APP}.desktop
-	ln -s _internal/${ICON} dist/${APP}/${ICON}
+	mv dist/${FILENAME}/${FILENAME} dist/${FILENAME}/AppRun
+	sed -i "s/X-AppImage-Version=VERSION/X-AppImage-Version="${VERSION}"/g" dist/${FILENAME}/_internal/${FILENAME}.desktop
+	ln -s _internal/${FILENAME}.desktop dist/${FILENAME}/${FILENAME}.desktop
+	ln -s _internal/${ICON} dist/${FILENAME}/${ICON}
 	wget https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-$(uname -m).AppImage
 	chmod +x appimagetool-$(uname -m).AppImage
 	echo "Running appimagetool..."
-	ARCH=$(uname -m) ./appimagetool-$(uname -m).AppImage dist/${APP}
+	ARCH=$(uname -m) ./appimagetool-$(uname -m).AppImage dist/${FILENAME}
 	rm appimagetool-$(uname -m).AppImage
-	PACKAGE=${APP}-${VERSION}-$(uname -m).AppImage
+	PACKAGE=${FILENAME}-${VERSION}-$(uname -m).AppImage
 	mv *.AppImage ${PACKAGE}
 	echo $(sha256sum ${PACKAGE}) > ${PACKAGE}.sha256
 }
@@ -35,10 +35,10 @@ make_appimage() {
 # Function to make portable binary
 make_binary() {
 	echo "Running pyinstaller..."
-	python3 -OO -m PyInstaller ${APP}-portable.spec --noconfirm
+	python3 -OO -m PyInstaller ${FILENAME}-portable.spec --noconfirm
 	echo "Preparing app..."
-	PACKAGE=${APP}-${VERSION}-$(uname -m)-portable.tar.gz
-	tar -czf ${PACKAGE} -C dist ${APP} -C ../.. LICENSE
+	PACKAGE=${FILENAME}-${VERSION}-$(uname -m)-portable.tar.gz
+	tar -czf ${PACKAGE} -C dist ${FILENAME} -C ../.. LICENSE
 	echo $(sha256sum ${PACKAGE}) > ${PACKAGE}.sha256
 }
 

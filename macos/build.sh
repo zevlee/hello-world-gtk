@@ -17,50 +17,50 @@ setup_venv() {
 make_app() {
 	echo "Preparing app..."
 	VERSION=$(cat ../VERSION)
-	cp "${APP}.spec" "${APP}@.spec"
-	sed -i '' "s/'VERSION'/'${VERSION}'/g" "${APP}@.spec"
+	cp "${FILENAME}.spec" "${FILENAME}@.spec"
+	sed -i '' "s/'VERSION'/'${VERSION}'/g" "${FILENAME}@.spec"
 	if [ ! -z "${CERT}" ]; then
-	    sed -i '' "s/codesign_identity=''/codesign_identity='${CERT}'/g" "${APP}@.spec"
+	    sed -i '' "s/codesign_identity=''/codesign_identity='${CERT}'/g" "${FILENAME}@.spec"
 	fi
 	echo "Running pyinstaller..."
-	python3 -OO -m PyInstaller "${APP}@.spec" --noconfirm
+	python3 -OO -m PyInstaller "${FILENAME}@.spec" --noconfirm
 }
 
 # Function to notarize app bundle
 notarize_app() {
 	echo "Notarizing app..."
 	cd dist
-	ZIP="${APP}-${VERSION}-$(uname -m).zip"
-	ditto -ck --sequesterRsrc --keepParent "${NAME}.app" "${ZIP}"
+	ZIP="${FILENAME}-${VERSION}-$(uname -m).zip"
+	ditto -ck --sequesterRsrc --keepParent "${APPNAME}.app" "${ZIP}"
 	if [ ! -z "${KEYC}" ]; then
 		xcrun notarytool submit "${ZIP}" --keychain-profile "${KEYC}" --wait
 	else
 		xcrun notarytool submit "${ZIP}" --apple-id "${APID}" --team-id "${TMID}" --password "${PASS}" --wait
 	fi
-	xcrun stapler staple "${NAME}.app"
+	xcrun stapler staple "${APPNAME}.app"
 	cd ..
 }
 
 # Function to build DMG
 build_dmg() {
 	echo "Building DMG..."
-	hdiutil create -size $(($(du -sk "dist/${NAME}.app"/ | awk '{print $1}')*175/100))k -fs HFS+ -volname "${NAME}" -o "${APP}.dmg"
-	DIR="$(echo $(hdiutil attach ${APP}.dmg | cut -f 3) | cut -f 1)"
-	mv "dist/${NAME}.app" "${DIR}"
+	hdiutil create -size $(($(du -sk "dist/${APPNAME}.app"/ | awk '{print $1}')*175/100))k -fs HFS+ -volname "${APPNAME}" -o "${FILENAME}.dmg"
+	DIR="$(echo $(hdiutil attach ${FILENAME}.dmg | cut -f 3) | cut -f 1)"
+	mv "dist/${APPNAME}.app" "${DIR}"
 	ln -s /Applications "${DIR}"
 	hdiutil detach "${DIR}"
-	PACKAGE="${APP}-${VERSION}-$(uname -m).dmg"
-	hdiutil convert "${APP}.dmg" -format UDZO -o "${PACKAGE}"
+	PACKAGE="${FILENAME}-${VERSION}-$(uname -m).dmg"
+	hdiutil convert "${FILENAME}.dmg" -format UDZO -o "${PACKAGE}"
 	echo $(shasum -a 256 "${PACKAGE}") > "${PACKAGE}.sha256"
 }
 
 # Function to make portable binary
 make_binary() {
 	echo "Running pyinstaller..."
-	python3 -OO -m PyInstaller "${APP}-portable.spec" --noconfirm
+	python3 -OO -m PyInstaller "${FILENAME}-portable.spec" --noconfirm
 	echo "Preparing app..."
-	PACKAGE="${APP}-${VERSION}-$(uname -m)-macos-portable.tar.gz"
-	tar -czf "${PACKAGE}" -C dist "${APP}" -C ../.. LICENSE
+	PACKAGE="${FILENAME}-${VERSION}-$(uname -m)-macos-portable.tar.gz"
+	tar -czf "${PACKAGE}" -C dist "${FILENAME}" -C ../.. LICENSE
 	echo $(shasum -a 256 "${PACKAGE}") > "${PACKAGE}.sha256"
 }
 
@@ -68,7 +68,7 @@ make_binary() {
 clean_up() {
 	echo "Cleaning up..."
 	deactivate
-	rm -rf build dist "${APP}.dmg" "${APP}@.spec" venv
+	rm -rf build dist "${FILENAME}.dmg" "${FILENAME}@.spec" venv
 	mv "${PACKAGE}"* ../..
 }
 
