@@ -22,8 +22,12 @@ make_installer() {
 	zip -r ${APP}.zip *
 	mv ${APP}.zip ../..
 	cd ../..
-	echo $(du -sk dist/${APP} | cut -f 1) > INSTALLSIZE
-	echo $(uname -m) > ARCH
+	echo ${NAME} > build/APPNAME
+	echo ${APP} > build/FILENAME
+	echo ${AUTHOR} > build/AUTHOR
+	echo ${DESCRIPTION} > build/DESCRIPTION
+	echo $(du -sk dist/${APP} | cut -f 1) > build/INSTALLSIZE
+	echo $(uname -m) > build/ARCH
 	echo "Running makensis..."
 	makensis ${APP}.nsi
 	PACKAGE=${APP}-${VERSION}-$(uname -m).exe
@@ -45,7 +49,7 @@ clean_up() {
 	echo "Cleaning up..."
 	deactivate
 	mv ${PACKAGE}* ../..
-	rm -rf build ${APP}.zip INSTALLSIZE ARCH dist venv
+	rm -rf build ${APP}.zip dist venv
 }
 
 # Function to display help
