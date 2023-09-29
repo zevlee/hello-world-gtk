@@ -16,30 +16,30 @@ setup_venv() {
 # Function to make installer
 make_installer() {
 	echo "Running pyinstaller..."
-	python3 -OO -m PyInstaller ${APP}.spec
+	python3 -OO -m PyInstaller ${FILENAME}.spec
 	echo "Preparing app..."
-	cd dist/${APP}
-	zip -r ${APP}.zip *
-	mv ${APP}.zip ../..
+	cd dist/${FILENAME}
+	zip -r ${FILENAME}.zip *
+	mv ${FILENAME}.zip ../..
 	cd ../..
-	echo ${NAME} > build/APPNAME
-	echo ${APP} > build/FILENAME
+	echo ${APPNAME} > build/APPNAME
+	echo ${FILENAME} > build/FILENAME
 	echo ${AUTHOR} > build/AUTHOR
 	echo ${DESCRIPTION} > build/DESCRIPTION
-	echo $(du -sk dist/${APP} | cut -f 1) > build/INSTALLSIZE
+	echo $(du -sk dist/${FILENAME} | cut -f 1) > build/INSTALLSIZE
 	echo $(uname -m) > build/ARCH
 	echo "Running makensis..."
-	makensis ${APP}.nsi
-	PACKAGE=${APP}-${VERSION}-$(uname -m).exe
+	makensis ${FILENAME}.nsi
+	PACKAGE=${FILENAME}-${VERSION}-$(uname -m).exe
 	echo $(sha256sum ${PACKAGE}) > ${PACKAGE}.sha256
 }
 
 # Function to make portable binary
 make_binary() {
 	echo "Running pyinstaller..."
-	python3 -OO -m PyInstaller ${APP}-portable.spec
+	python3 -OO -m PyInstaller ${FILENAME}-portable.spec
 	echo "Preparing app..."
-	PACKAGE=${APP}-${VERSION}-$(uname -m)-portable.exe
+	PACKAGE=${FILENAME}-${VERSION}-$(uname -m)-portable.exe
 	mv dist/* ./${PACKAGE}
 	echo $(sha256sum ${PACKAGE}) > ${PACKAGE}.sha256
 }
@@ -49,7 +49,7 @@ clean_up() {
 	echo "Cleaning up..."
 	deactivate
 	mv ${PACKAGE}* ../..
-	rm -rf build ${APP}.zip dist venv
+	rm -rf build ${FILENAME}.zip dist venv
 }
 
 # Function to display help

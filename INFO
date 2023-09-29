@@ -1,7 +1,7 @@
 #!/bin/sh
 
-APP=hello-world-gtk
-NAME="Hello World"
-ICON=org.example.HelloWorldGTK.svg
+FILENAME="hello-world-gtk"
+APPNAME="Hello World"
+ICON="org.example.HelloWorldGTK.svg"
 AUTHOR="Author Name"
 DESCRIPTION="Hello World GTK"
