@@ -54,12 +54,22 @@ build_dmg() {
 	echo $(shasum -a 256 "${PACKAGE}") > "${PACKAGE}.sha256"
 }
 
+# Function to make portable binary
+make_binary() {
+	echo "Running pyinstaller..."
+	python3 -OO -m PyInstaller "${APP}-portable.spec" --noconfirm
+	echo "Preparing app..."
+	PACKAGE="${APP}-${VERSION}-$(uname -m)-portable.tar.gz"
+	tar -czf "${PACKAGE}" -C dist "${APP}" -C ../.. LICENSE
+	echo $(shasum -a 256 "${PACKAGE}") > "${PACKAGE}.sha256"
+}
+
 # Function to clean up build artifacts
 clean_up() {
 	echo "Cleaning up..."
 	deactivate
 	rm -rf build dist "${APP}.dmg" "${APP}@.spec" venv
-	mv "${APP}-${VERSION}-$(uname -m).dmg"* ../..
+	mv "${PACKAGE}"* ../..
 }
 
 # Function to display help
@@ -67,9 +77,10 @@ show_help() {
 	echo "Build a macOS app bundled in a DMG"
 	echo
 	echo "Syntax:"
-	echo "./build.sh [-h] [-c CERT] [[-k KEYC]|[-a APID] [-t TMID] [-p PASS]]"
+	echo "./build.sh [-b|h] [-c CERT] [[-k KEYC]|[-a APID] [-t TMID] [-p PASS]]"
 	echo
 	echo "Options:"
+	echo "-b          Build a portable binary"
 	echo "-h          Display help dialog"
 	echo
 	echo "Arguments:"
@@ -101,7 +112,7 @@ show_help() {
 main() {
 	. ../INFO
 	VERSION=$(cat ../VERSION)
-	while getopts "c:k:a:t:p:h" OPTION; do
+	while getopts "c:k:a:t:p:bh" OPTION; do
 		case ${OPTION} in
 			c)
 				CERT="${OPTARG}"
@@ -117,6 +128,12 @@ main() {
 				;;
 			p)
 				PASS="${OPTARG}"
+				;;
+			b)
+				setup_venv
+				make_binary
+				clean_up
+				exit 0
 				;;
 			h)
 				show_help
