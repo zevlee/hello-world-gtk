@@ -1,15 +1,14 @@
 #!/usr/bin/makensis
 
-!define APPNAME "Hello World"
-!define FILENAME "hello-world-gtk"
-!define AUTHOR "Author Name"
-!define DESCRIPTION "Hello World GTK"
-
 Unicode True
 
+!define /file APPNAME "build\APPNAME"
+!define /file FILENAME "build\FILENAME"
+!define /file AUTHOR "build\AUTHOR"
+!define /file DESCRIPTION "build\DESCRIPTION"
 !define /file VERSION "..\VERSION"
-!define /file INSTALLSIZE "INSTALLSIZE"
-!define /file ARCH "ARCH"
+!define /file INSTALLSIZE "build\INSTALLSIZE"
+!define /file ARCH "build\ARCH"
 
 InstallDir "$PROGRAMFILES\${APPNAME}"
 
