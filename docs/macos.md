@@ -19,7 +19,7 @@ cd hello-world-gtk/macos
 Build Options
 Flag | Description
 :-- | :--
-`-b` | Build a portable binary (Without this flag, builds a dmg with an app bundle)
+`-b` | Build a portable binary (Without this flag, builds a DMG containing an app bundle)
 `-h` | Display help dialog
 
 Build Arguments
