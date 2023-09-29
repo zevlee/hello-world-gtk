@@ -57,10 +57,10 @@ show_help() {
 	echo "Build a Windows executable file, either an installer or portable binary"
 	echo
 	echo "Syntax:"
-	echo "./build.sh [-p|h]"
+	echo "./build.sh [-b|h]"
 	echo
 	echo "Options:"
-	echo "-p          Build a portable binary"
+	echo "-b          Build a portable binary"
 	echo "-h          Display help dialog"
 	echo
 }
