@@ -10,8 +10,7 @@ a = Analysis(
 		('../helloworldgtk', 'helloworldgtk'),
 		('../org.example.HelloWorldGTK.svg', '.'),
 		('../LICENSE', '.'),
-		('../VERSION', '.'),
-		('hello-world-gtk.desktop', '.')
+		('../VERSION', '.')
 	],
 	hooksconfig={
 		'gi': {
