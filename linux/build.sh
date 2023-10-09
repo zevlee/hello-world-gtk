@@ -11,7 +11,7 @@ setup_venv() {
 			python3 -m pip install -r "${REQUIREMENTS}"
 		fi
 	else
-		. "${VENV}/bin/activate"
+		. "${VENV}"/bin/activate
 	fi
 }
 
