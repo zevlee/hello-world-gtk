@@ -1,8 +1,8 @@
-*/__pycache__/
-*/build/
-*/dist/
-*/venv/
-venv/
+**/__pycache__/
+**/build/
+**/dist/
+**/venv/
+**/.env
 
 # Eclipse IDE project files
 .project
