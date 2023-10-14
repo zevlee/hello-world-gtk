@@ -2,18 +2,20 @@
 
 Unicode True
 
+!define /file ZIP "build\ZIP"
 !define /file APPNAME "build\APPNAME"
 !define /file FILENAME "build\FILENAME"
+!define /file ICON "build\ICON"
 !define /file AUTHOR "build\AUTHOR"
 !define /file DESCRIPTION "build\DESCRIPTION"
-!define /file VERSION "..\VERSION"
+!define /file VERSION "build\VERSION"
 !define /file INSTALLSIZE "build\INSTALLSIZE"
 !define /file ARCH "build\ARCH"
 
 InstallDir "$PROGRAMFILES\${APPNAME}"
 
 Name "${APPNAME}"
-Icon "${FILENAME}.ico"
+Icon "${ICON}"
 outFile "${FILENAME}-${VERSION}-${ARCH}.exe"
 
 !include LogicLib.nsh
@@ -38,24 +40,24 @@ functionEnd
 
 section "install"
 
-	setOutPath $INSTDIR
-	file "${FILENAME}.ico"
-	file "${FILENAME}.zip"
+	setOutPath "$INSTDIR"
+	file "${ICON}"
+	file "${ZIP}"
 
-	nsisunz::Unzip "$INSTDIR\${FILENAME}.zip" "$INSTDIR"
+	nsisunz::Unzip "$INSTDIR\${ZIP}" "$INSTDIR"
 
-	delete "$INSTDIR\${FILENAME}.zip"
+	delete "$INSTDIR\${ZIP}"
 
 	writeUninstaller "$INSTDIR\uninstall.exe"
 
 	createDirectory "$SMPROGRAMS\${APPNAME}"
-	createShortCut "$SMPROGRAMS\${APPNAME}\${APPNAME}.lnk" "$INSTDIR\${FILENAME}.exe" "" "$INSTDIR\${FILENAME}.ico"
+	createShortCut "$SMPROGRAMS\${APPNAME}\${APPNAME}.lnk" "$INSTDIR\${FILENAME}.exe" "" "$INSTDIR\${ICON}"
 
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayName" "${APPNAME}"
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "QuietUninstallString" "$\"$INSTDIR\uninstall.exe$\" /S"
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "InstallLocation" "$\"$INSTDIR$\""
-	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayIcon" "$\"$INSTDIR\${FILENAME}.ico$\""
+	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayIcon" "$\"$INSTDIR\${ICON}$\""
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "Publisher" "${AUTHOR}"
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayVersion" "${VERSION}"
 	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "NoModify" 1
@@ -73,6 +75,6 @@ functionEnd
 
 section "uninstall"
 	rmDir /r /REBOOTOK "$SMPROGRAMS\${APPNAME}"
-	rmDir /r /REBOOTOK $INSTDIR
+	rmDir /r /REBOOTOK "$INSTDIR"
 	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
 sectionEnd
