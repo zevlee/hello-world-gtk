@@ -61,6 +61,9 @@ build_dmg() {
 	DIR="$(echo $(hdiutil attach ${DMG} | cut -f 3) | cut -f 1)"
 	mv "dist/${APPNAME}.app" "${DIR}"
 	ln -s /Applications "${DIR}"
+	cp "${ICON}" "${DIR}"/.VolumeIcon.icns
+	SetFile -c icnC "${DIR}"/.VolumeIcon.icns
+	SetFile -a C "${DIR}"
 	hdiutil detach "${DIR}"
 	PACKAGE="${FILENAME}-${VERSION}-$(uname -m).dmg"
 	hdiutil convert "${DMG}" -format UDZO -o "${PACKAGE}"
