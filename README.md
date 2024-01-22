@@ -1,18 +1,8 @@
 # Hello World GTK
-This repository is an easily configurable build system for distributing Python-based GTK applications. First, [PyInstaller](https://github.com/pyinstaller/pyinstaller) is used to assemble the application directory. Then, a packaging program is used to bundle everything into a self-contained application.
+Hello World GTK is an easily configurable build system for distributing
+Python-based GTK applications. This is an example repository for
+[PyDeployment](https://github.com/pydeployment/pydeployment), which is used to
+easily build applications for Windows, macOS, and Linux.
 
-* On Windows, [NSIS](https://nsis.sourceforge.io) is used.
-* On macOS, the built-in hdiutil is used.
-* On Linux, [AppImageKit](https://github.com/AppImage/AppImageKit) is used.
-
-The releases section contains the result of using this repo as-is.
-
-GTK3 and GTK4 are fully supported.
-
-## [Documentation](/docs/README.md)
-
-[Building on Windows](/docs/windows.md)
-
-[Building on macOS](/docs/macos.md)
-
-[Building on Linux](/docs/linux.md)
+Check out the workflow file to get an idea of how to use GitHub workflows to
+automate creating releases and building binaries.
