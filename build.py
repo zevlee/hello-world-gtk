@@ -146,6 +146,11 @@ class Build:
             f"{self.py} -m pip install pydeployment",
             self.logger.info
         )
+        requirements = join(self.srcdir, "requirements.txt")
+        self._run_command(
+            f"{self.py} -m pip install -r {requirements}",
+            self.logger.info
+        )
         self.logger.debug(f"Set up virtual environment: {venv}")
         return 0
 
