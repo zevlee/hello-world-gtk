@@ -26,7 +26,7 @@ jobs:
           python3 -m pip install PyGObject
       - name: Set up environment
         run: |
-          cp .env.sample .env
+          cp .env.template .env
       - name: Build package
         run: |
           python3 build.py
@@ -68,7 +68,7 @@ jobs:
           # Create keychain profile
           xcrun notarytool store-credentials "notarytool-profile" --apple-id "$MACOS_NOTARIZATION_APPLE_ID" --team-id "$MACOS_NOTARIZATION_TEAM_ID" --password "$MACOS_NOTARIZATION_PWD"
           # Store info in environment file
-          cp .env.sample .env
+          cp .env.template .env
           echo 'CERT="'$MACOS_CERTIFICATE_NAME'"' >> .env
           echo 'KEYC=notarytool-profile' >> .env
       - name: Build package
@@ -112,7 +112,7 @@ jobs:
           # Create keychain profile
           xcrun notarytool store-credentials "notarytool-profile" --apple-id "$MACOS_NOTARIZATION_APPLE_ID" --team-id "$MACOS_NOTARIZATION_TEAM_ID" --password "$MACOS_NOTARIZATION_PWD"
           # Store info in environment file
-          cp .env.sample .env
+          cp .env.template .env
           echo 'CERT="'$MACOS_CERTIFICATE_NAME'"' >> .env
           echo 'KEYC=notarytool-profile' >> .env
       - name: Build package
@@ -146,7 +146,7 @@ jobs:
           ./windows/bootstrap.sh
       - name: Set up environment
         run: |
-          cp .env.sample .env
+          cp .env.template .env
       - name: Build package
         run: |
           python3 build.py
