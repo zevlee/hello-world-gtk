@@ -22,6 +22,8 @@ jobs:
           sudo apt upgrade
           sudo apt install desktop-file-utils
           sudo ./linux/bootstrap.sh
+          python3 -m pip install pycairo
+          python3 -m pip install PyGObject
       - name: Set up environment
         run: |
           cp .env.template .env
