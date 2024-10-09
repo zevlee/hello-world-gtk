@@ -10,14 +10,20 @@
   
   <description>
     <p>
-      Hello World GTK
+      Hello World GTK is an easily configurable build system for distributing Python-based GTK applications. This is an example repository for PyDeployment, which is used to easily build applications for Windows, macOS, and Linux.
+    </p>
+    <p>
+      Check out the workflow file to get an idea of how to use GitHub workflows to automate creating releases and building binaries.
     </p>
   </description>
   
   <launchable type="desktop-id">org.example.HelloWorldGTK.desktop</launchable>
   <screenshots>
     <screenshot type="default">
-      <image>https://publicdomainvectors.org/photos/kawaii_earth.png</image>
+      <image>https://raw.githubusercontent.com/zevlee/hello-world-gtk/refs/heads/main/screenshots/screenshot.png</image>
     </screenshot>
   </screenshots>
+  <developer_name>Author Name</developer_name>
+  <url type="homepage">https://github.com/zevlee/hello-world-gtk</url>
+  <url type="bugtracker">https://github.com/zevlee/hello-world-gtk/issues</url>
 </component>
