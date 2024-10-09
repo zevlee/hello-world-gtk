@@ -86,6 +86,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Install dependencies
         run: |
+          # Workaround for externally-managed-environment error
+          python3 -m pip config --global set global.break-system-packages true
           ./macos/bootstrap.sh
       - name: Set up environment
         env:
