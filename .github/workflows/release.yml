@@ -45,6 +45,8 @@ jobs:
       - name: Install dependencies
         run: |
           ./macos/bootstrap.sh
+          python3 -m pip install pycairo
+          python3 -m pip install PyGObject
       - name: Set up environment
         env:
           MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
