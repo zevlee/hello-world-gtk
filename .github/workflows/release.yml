@@ -55,19 +55,19 @@ jobs:
         run: |
           cp .env.ci .env
           # NOTE: Comment out or remove the following commands to disable code signing and notarization
-          # Decode certificate
-          echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
-          # Create keychain
-          security create-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
-          security default-keychain -s build.keychain
-          security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
-          security import certificate.p12 -k build.keychain -P "$MACOS_CERTIFICATE_PWD" -T /usr/bin/codesign
-          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MACOS_CI_KEYCHAIN_PWD" build.keychain
-          # Create keychain profile
-          xcrun notarytool store-credentials "notarytool-profile" --apple-id "$MACOS_NOTARIZATION_APPLE_ID" --team-id "$MACOS_NOTARIZATION_TEAM_ID" --password "$MACOS_NOTARIZATION_PWD"
-          # Store info in environment file
-          echo 'CERT="'$MACOS_CERTIFICATE_NAME'"' >> .env
-          echo 'KEYC=notarytool-profile' >> .env
+#           # Decode certificate
+#           echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
+#           # Create keychain
+#           security create-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
+#           security default-keychain -s build.keychain
+#           security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
+#           security import certificate.p12 -k build.keychain -P "$MACOS_CERTIFICATE_PWD" -T /usr/bin/codesign
+#           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MACOS_CI_KEYCHAIN_PWD" build.keychain
+#           # Create keychain profile
+#           xcrun notarytool store-credentials "notarytool-profile" --apple-id "$MACOS_NOTARIZATION_APPLE_ID" --team-id "$MACOS_NOTARIZATION_TEAM_ID" --password "$MACOS_NOTARIZATION_PWD"
+#           # Store info in environment file
+#           echo 'CERT="'$MACOS_CERTIFICATE_NAME'"' >> .env
+#           echo 'KEYC=notarytool-profile' >> .env
       - name: Build package
         run: |
           python3 build.py
@@ -102,19 +102,19 @@ jobs:
         run: |
           cp .env.ci .env
           # NOTE: Comment out or remove the following commands to disable code signing and notarization
-          # Decode certificate
-          echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
-          # Create keychain
-          security create-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
-          security default-keychain -s build.keychain
-          security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
-          security import certificate.p12 -k build.keychain -P "$MACOS_CERTIFICATE_PWD" -T /usr/bin/codesign
-          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MACOS_CI_KEYCHAIN_PWD" build.keychain
-          # Create keychain profile
-          xcrun notarytool store-credentials "notarytool-profile" --apple-id "$MACOS_NOTARIZATION_APPLE_ID" --team-id "$MACOS_NOTARIZATION_TEAM_ID" --password "$MACOS_NOTARIZATION_PWD"
-          # Store info in environment file
-          echo 'CERT="'$MACOS_CERTIFICATE_NAME'"' >> .env
-          echo 'KEYC=notarytool-profile' >> .env
+#           # Decode certificate
+#           echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
+#           # Create keychain
+#           security create-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
+#           security default-keychain -s build.keychain
+#           security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
+#           security import certificate.p12 -k build.keychain -P "$MACOS_CERTIFICATE_PWD" -T /usr/bin/codesign
+#           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MACOS_CI_KEYCHAIN_PWD" build.keychain
+#           # Create keychain profile
+#           xcrun notarytool store-credentials "notarytool-profile" --apple-id "$MACOS_NOTARIZATION_APPLE_ID" --team-id "$MACOS_NOTARIZATION_TEAM_ID" --password "$MACOS_NOTARIZATION_PWD"
+#           # Store info in environment file
+#           echo 'CERT="'$MACOS_CERTIFICATE_NAME'"' >> .env
+#           echo 'KEYC=notarytool-profile' >> .env
       - name: Build package
         run: |
           python3 build.py
