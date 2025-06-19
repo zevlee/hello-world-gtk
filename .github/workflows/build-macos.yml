@@ -14,7 +14,7 @@ jobs:
       - name: Install dependencies
         run: |
           # Workaround for externally-managed-environment error
-          python3 -m pip config --global set global.break-system-packages true
+          sudo python3 -m pip config --global set global.break-system-packages true
           ./macos/bootstrap.sh
           python3 -m pip install pycairo
           python3 -m pip install PyGObject
