@@ -23,8 +23,9 @@ account in order to generate and use the necessary certificate to code sign
 your application.
 
 To enable code signing and notarization for macOS builds, you will need to
-uncomment the relevant lines in the `release.yml` workflow file and add several
-repository secrets. These secrets can be added at
+uncomment the relevant lines in the `build-macos.yml` and
+`build-macos-intel.yml` workflow files and add several repository secrets.
+These secrets can be added at
 `https://github.com/<user>/<repo>/settings/secrets/actions`.
 
 The following secrets are needed.
