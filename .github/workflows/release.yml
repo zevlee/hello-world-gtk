@@ -31,22 +31,22 @@ jobs:
       id-token: write
     steps:
       - name: Download Linux dist
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: linux-dist
           path: dist/
       - name: Download macOS dist
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: macos-dist
           path: dist/
       - name: Download macOS Intel dist
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: macos-intel-dist
           path: dist/
       - name: Download Windows dist
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: windows-dist
           path: dist/
