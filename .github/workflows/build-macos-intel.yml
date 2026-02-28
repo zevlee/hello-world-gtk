@@ -7,7 +7,7 @@ on:
 jobs:
   build-macos-intel:
     name: Build for macOS Intel
-    runs-on: macos-13
+    runs-on: macos-15-intel
     steps:
       - name: Checkout
         uses: actions/checkout@v6
